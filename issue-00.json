@@ -1,0 +1,45 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Netlify Identity + Git Gateway handles login/auth — no GitHub account
+# needed for the person actually using the CMS day to day.
+local_backend: false
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+publish_mode: simple
+
+collections:
+  - name: "issues"
+    label: "Issues"
+    label_singular: "Issue"
+    folder: "issues"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{issue_number}} — {{title}}"
+    sortable_fields: ["issue_number", "publish_date"]
+    fields:
+      - { label: "Issue Number", name: "issue_number", widget: "string", hint: "e.g. 01, 02, 03" }
+      - { label: "Issue Title", name: "title", widget: "string", hint: "e.g. Spring 2026" }
+      - { label: "Subtitle / Tag", name: "subtitle", widget: "string", required: false, hint: "e.g. 'Six pieces · Fiction, poetry & essay'" }
+      - { label: "Publish Date", name: "publish_date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Description", name: "description", widget: "text", hint: "Short blurb shown on the issue card" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["published", "upcoming"]
+        default: "upcoming"
+      - label: "Pieces"
+        name: "pieces"
+        widget: "list"
+        summary: "{{fields.title}} — {{fields.author}}"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - label: "Category"
+            name: "category"
+            widget: "select"
+            options: ["Fiction", "Poetry", "Essay"]
+          - { label: "Author", name: "author", widget: "string" }
+          - { label: "Excerpt / Description", name: "excerpt", widget: "text" }

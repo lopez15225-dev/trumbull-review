@@ -1,0 +1,84 @@
+# The Trumbull Review — Setup Guide
+
+This folder is your whole website, plus a free editing dashboard at `/admin`.
+Follow these steps once. After that, adding issues is just logging in and
+filling out a form.
+
+## What's in here
+- `index.html` — the website itself
+- `admin/` — the editing dashboard (Decap CMS)
+- `issues/` — one JSON file per issue; this is your content
+- `js/issues.js` — loads the issue files and builds the page
+- `css/`, images, etc. — supporting files
+
+## Step 1 — Create a GitHub account
+Go to https://github.com/join and make a free account if you don't have one.
+
+## Step 2 — Create a new repository
+1. Click the "+" in GitHub's top right → "New repository"
+2. Name it something like `trumbull-review`
+3. Keep it **Public** (this is fine — Decap CMS still requires login to edit)
+4. Click "Create repository"
+5. Upload every file in this folder into that repo (drag-and-drop works on
+   GitHub's "Add file → Upload files" screen). Keep the folder structure —
+   `admin/`, `issues/`, `js/` need to stay as folders, not get flattened.
+
+## Step 3 — Create a Netlify account and connect the repo
+1. Go to https://app.netlify.com and sign up free (you can sign up with your
+   GitHub account directly — recommended, it simplifies the next steps)
+2. Click "Add new site" → "Import an existing project"
+3. Choose GitHub, then select your `trumbull-review` repo
+4. Leave build settings blank (no build command, no publish directory needed
+   — this site has no build step) and click "Deploy"
+5. Netlify will give you a live URL like `random-name-123.netlify.app`. You
+   can rename this later in Site settings → Domain management, or connect a
+   real domain if you buy one.
+
+## Step 4 — Turn on Identity (this is what makes /admin login work)
+1. In your Netlify site dashboard, go to **Site configuration → Identity**
+2. Click "Enable Identity"
+3. Under Registration preferences, set it to **Invite only** (so random
+   people can't sign up to edit your site)
+4. Scroll to **Services → Git Gateway** and click "Enable Git Gateway" —
+   this is what lets Identity-logged-in users save content to GitHub without
+   needing their own GitHub account
+
+## Step 5 — Invite yourself (and any co-editors)
+1. Still in Identity, click "Invite users"
+2. Enter your email (and your co-editors' emails)
+3. Check your email for the invite link, click it, set a password
+
+## Step 6 — Log in and try it
+Go to `your-site.netlify.app/admin/`, log in with the password you just set,
+and you should see "Issues" as a collection with Issue 00, 01, and 02
+already there. Click "New Issue" to try adding one.
+
+## Adding a new issue going forward
+1. Go to `your-site.netlify.app/admin/`
+2. Click **New Issue**
+3. Fill in issue number, title, date, description, status, and add pieces
+   (title, category, author, excerpt) using the "Add Piece" button
+4. Click **Publish**
+5. Netlify automatically rebuilds the live site within about a minute —
+   no file uploads, no code
+
+**One technical note:** the homepage needs to know which issue files exist.
+`js/issues.js` has a list near the top called `ISSUE_FILES`. When you add a
+new issue through /admin, message me (or, if you're comfortable, open
+`js/issues.js` on GitHub and add `"issues/issue-03.json"` — matching
+whatever slug Decap generated — to that list) so the new issue shows up on
+the homepage. I can also help automate this away entirely later if it
+becomes annoying.
+
+## Editing existing text (titles, About section, submission guidelines, etc.)
+The rest of the site (About, Submissions, Team, Contact) still uses the
+in-page **"✎ Edit Text"** button in the bottom-right corner of the live
+site — click it, click any text, retype it, then hit **Save & Download**
+to get an updated `index.html` file, which you then re-upload to GitHub
+(or ask me to help update).
+
+## Emailing issues
+Separate from this site — use Mailchimp (free up to 500 subscribers) or
+Buttondown (free up to 100). I can help you build an email template once
+you're ready that matches this look, and you'd paste each issue's pieces
+in when it's time to send.
